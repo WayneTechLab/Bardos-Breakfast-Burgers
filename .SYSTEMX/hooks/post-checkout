@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+import { spawnSync } from 'node:child_process'
+
+const [previous, next, branchCheckout] = process.argv.slice(2)
+if (branchCheckout !== '1' || !previous || !next) process.exit(0)
+const result = spawnSync('git', ['diff', '--name-only', previous, next], { encoding: 'utf8', windowsHide: true })
+if (result.status === 0 && result.stdout.split(/\r?\n/).some((file) => /(^|\/)package(?:-lock)?\.json$/.test(file))) {
+  console.log("[post-checkout] Package metadata changed; run 'npm install'.")
+}

@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+import { readFileSync } from 'node:fs'
+import path from 'node:path'
+import process from 'node:process'
+
+const root = process.cwd()
+const packageVersion = JSON.parse(readFileSync(path.join(root, 'package.json'), 'utf8')).version
+const versionState = JSON.parse(readFileSync(path.join(root, '.SYSTEMX/version/version.json'), 'utf8'))
+if (versionState.app?.version !== packageVersion || versionState.systemx?.version !== packageVersion) {
+  console.error('[pre-push] SYSTEMX version drift detected. Run npm run sync:system.')
+  process.exit(1)
+}
+console.log(`[pre-push] SFWA-WTL-G1 version verified: v${packageVersion}`)

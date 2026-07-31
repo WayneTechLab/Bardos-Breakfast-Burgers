@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "product": "SFWA-WTL-G1",
+  "node": "24.x LTS",
+  "platforms": {
+    "macos-arm64": {
+      "status": "supported",
+      "shell": "zsh/bash",
+      "bootstrap": "install.sh",
+      "notes": ["Apple Silicon is the required macOS release lane."]
+    },
+    "macos-x64": {
+      "status": "compatibility",
+      "shell": "zsh/bash",
+      "bootstrap": "install.sh",
+      "notes": ["Intel macOS is auto-detected and supported by the installer but is not a required release gate."]
+    },
+    "windows-x64": {
+      "status": "supported",
+      "shell": "PowerShell 7",
+      "bootstrap": "install.ps1",
+      "notes": ["Windows 11 and Windows Terminal are the supported baseline."]
+    },
+    "windows-arm64": {
+      "status": "supported-with-emulation-gates",
+      "shell": "PowerShell 7",
+      "bootstrap": "install.ps1",
+      "notes": [
+        "Node.js, Git, GitHub CLI, VS Code, and Firebase CLI use native ARM64 paths when the vendor package provides one.",
+        "Any x64-only package must display an emulation warning and pass a read-only verification gate."
+      ]
+    },
+    "ubuntu-x64": {
+      "status": "supported",
+      "shell": "bash",
+      "bootstrap": "install.sh",
+      "notes": ["Ubuntu 24.04 x64 is a required release gate."]
+    },
+    "ubuntu-arm64": {
+      "status": "supported-public-preview-runner",
+      "shell": "bash",
+      "bootstrap": "install.sh",
+      "notes": ["Ubuntu 24.04 ARM64 is required in CI; its GitHub-hosted runner class is in public preview."]
+    },
+    "wsl2-x64": {
+      "status": "supported-compatibility",
+      "shell": "bash",
+      "bootstrap": "install.sh",
+      "notes": ["Run the Linux bootstrap inside WSL2. VS Code and Chrome are installed on the Windows host through WinGet when interop is available."]
+    },
+    "wsl2-arm64": {
+      "status": "supported-compatibility",
+      "shell": "bash",
+      "bootstrap": "install.sh",
+      "notes": ["Windows-on-ARM WSL2 uses native Linux ARM64 Node and Google Cloud archives plus Windows-host VS Code integration."]
+    },
+    "debian-x64": {
+      "status": "compatibility",
+      "shell": "bash",
+      "bootstrap": "install.sh",
+      "notes": ["Debian 12+ uses the apt bootstrap path but is not a required release gate."]
+    },
+    "debian-arm64": {
+      "status": "compatibility",
+      "shell": "bash",
+      "bootstrap": "install.sh",
+      "notes": ["Debian 12+ ARM64 uses the apt bootstrap path but is not a required release gate."]
+    },
+    "linux-x64": {
+      "status": "community-compatibility",
+      "shell": "bash",
+      "bootstrap": "install.sh",
+      "notes": ["Generic x64 Linux supports the shared CLI; automatic vendor installation requires apt or dnf and may need manual completion."]
+    },
+    "linux-arm64": {
+      "status": "community-compatibility",
+      "shell": "bash",
+      "bootstrap": "install.sh",
+      "notes": ["Generic ARM64 Linux supports the shared CLI; desktop/browser packages vary by distribution."]
+    }
+  }
+}

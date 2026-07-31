@@ -1,0 +1,10 @@
+ui_area,menu_item,command,state_changed,evidence_created,stop_rule
+Command Center,Open SYSTEMX menu,npm run wtl:menu,Only the selected menu action changes state,Menu output and operation log,Stop if menu points to the wrong repo
+Active App,Start local Vite plus SYSTEMX LAN,npm run wtl:local -- start-day,.SYSTEMX/LAN/session-current.json and owned local processes,Active app URL LAN URL owned PID list,Stop if the port belongs to another repo
+Active App,Stop local session,npm run wtl:local -- end-day,Stops only PIDs recorded for this repo,End-of-day JSON result,Stop if an owned PID cannot be stopped cleanly
+Firebase Dev,Start Firebase emulators plus SYSTEMX LAN,npm run wtl:local -- start-day --firebase,Local emulator processes and ignored temp config,Demo project ID emulator URLs and ports,Stop if a real Firebase project would be touched
+KIT Catalog,Show SYSTEMX kits,npm run wtl:kit -- list,No source state changes,Production Brand Guide and Standard MD kit list,Stop if a required kit folder or manifest is missing
+Standard MD Kit,Show copy order,npm run wtl:kit -- standard-md-order,No source state changes,Standard MD file order for LLM and packet handoffs,Stop if copy order differs from MANIFEST.json
+Setup Packet,Export setup packet,npm run wtl:packet -- export,Creates a local zip in the target output folder,Platform stamped packet and manifest,Stop if packet contains secrets or private customer data
+Quality,Run local gates,npm run ci:all,Build artifacts and local logs,Typecheck lint test security build result,Stop on any required gate failure
+Deploy,Preflight Firebase deploy,npm run wtl:deploy -- --preflight,No production state,Preflight report,Stop if account branch project or target is not exact

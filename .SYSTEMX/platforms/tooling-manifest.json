@@ -1,0 +1,14 @@
+{
+  "node": { "version": "24.x", "required": true, "architectures": ["x64", "arm64"], "verification": "vendor-sha256" },
+  "npm": { "version": "11.x", "required": true, "providedBy": "node" },
+  "powershell": { "version": "7.x", "requiredOnWindows": true, "windowsArm64": "native" },
+  "git": { "version": "current", "required": true, "bootstrapDefault": true },
+  "githubCli": { "version": "current", "required": false, "bootstrapDefault": true, "linuxRepository": "official-signed" },
+  "visualStudioCode": { "version": "current", "required": false, "bootstrapDefault": true, "wsl": "windows-host-with-wsl-extension" },
+  "firebaseCli": { "version": "15.25.1", "required": true, "delivery": "pinned-on-demand-npx" },
+  "googleCloudCli": { "version": "current", "required": false, "bootstrapDefault": true, "linuxArm64": "native-vendor-archive" },
+  "chrome": { "version": "current", "required": false, "bootstrapDefault": true, "linuxArm64": "chromium-fallback" },
+  "stripeCli": { "version": "current", "required": false, "enablement": "explicit-opt-in" },
+  "microsoft365Cli": { "version": "current", "required": false, "enablement": "explicit-opt-in" },
+  "chromeDevtoolsMcp": { "version": "1.6.0", "required": false, "enablement": "explicit-opt-in" }
+}

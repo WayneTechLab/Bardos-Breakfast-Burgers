@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# SFWA-WTL-G1 macOS/Linux compatibility launcher.
+exec node "$(dirname "${BASH_SOURCE[0]}")/.SYSTEMX/cli/systemx.mjs" sync "$@"

@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+import { spawnSync } from 'node:child_process'
+
+const result = spawnSync(process.execPath, ['.SYSTEMX/cli/systemx.mjs', 'sync', '--check'], { stdio: 'inherit', windowsHide: true })
+if (result.status !== 0) console.warn('[post-merge] SYSTEMX drift detected; run npm run sync:system before publishing.')

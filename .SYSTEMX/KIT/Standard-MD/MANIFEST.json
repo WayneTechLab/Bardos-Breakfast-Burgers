@@ -1,0 +1,62 @@
+{
+  "kitId": "standard-md",
+  "name": "SYSTEMX Standard MD Kit",
+  "version": "1.0.0",
+  "purpose": "Unifies Standard MD, Stock Setup, intake, master-plan, and packet assets under the SYSTEMX KIT catalog while preserving legacy packet paths.",
+  "canonicalPath": ".SYSTEMX/KIT/Standard-MD/",
+  "sourceSets": [
+    {
+      "id": "standard",
+      "path": ".SYSTEMX/Standard-MD-Files/",
+      "role": "Primary LLM/setup-packet copy-order files"
+    },
+    {
+      "id": "stock",
+      "path": ".SYSTEMX/Stock-Setup-Files/",
+      "role": "Compatibility baseline for stock setup flows"
+    },
+    {
+      "id": "intake",
+      "path": ".SYSTEMX/Unified-Setup-Process/intake/",
+      "role": "Project-specific setup answers and planning inputs"
+    },
+    {
+      "id": "master-plan",
+      "path": ".SYSTEMX/Unified-Setup-Process/master-plan/",
+      "role": "20-phase process and master planning source"
+    },
+    {
+      "id": "packet-assets",
+      "path": ".SYSTEMX/Unified-Setup-Process/packet-assets/",
+      "role": "Schemas, visuals, and prompts for setup packet tooling"
+    }
+  ],
+  "copyOrder": [
+    "00-COPY-ORDER.md",
+    "01-LLM-ROLE-AND-RULES.md",
+    "02-TEMPLATE-UPDATE-REQUEST.md",
+    "03-SYSTEMX-CONTEXT.md",
+    "04-EDITION-AND-MODULES.md",
+    "05-SECURITY-LOGIN-ACCOUNT-LEVELS.md",
+    "06-SETUP-DEPLOY-QUALITY-GATES.md",
+    "07-OUTPUT-CHECKLIST.md",
+    "08-DESIGN.md",
+    "09-MEDIA-ASSETS.md",
+    "10-CONTENT-SEO.md",
+    "11-ACCESSIBILITY-UX.md",
+    "12-BRAND-TOKENS.md",
+    "13-PLATFORM-AGENT-TOOLING.md"
+  ],
+  "commands": [
+    "npm run wtl:kit -- list",
+    "npm run wtl:kit -- show standard-md",
+    "npm run wtl:kit -- standard-md-order",
+    "npm run wtl:packet -- export"
+  ],
+  "security": [
+    "No secrets in Standard MD files, intake files, setup packets, or prompts.",
+    "Keep generated packets sanitized before sharing.",
+    "Preserve legacy paths until all downstream scripts and docs are migrated."
+  ]
+}
+

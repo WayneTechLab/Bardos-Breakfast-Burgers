@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <title>SYSTEMX LAN Control</title>
+    <link rel="stylesheet" href="/Website/dashboard.css" />
+  </head>
+  <body>
+    <header class="shell-header">
+      <div>
+        <p class="eyebrow">.SYSTEMX LAN</p>
+        <h1>SYSTEMX Local Control</h1>
+      </div>
+      <span class="local-badge">LOCAL DEVELOPMENT ONLY</span>
+    </header>
+
+    <main class="layout">
+      <nav class="rail" aria-label="SYSTEMX sections">
+        <a href="#command">Command</a>
+        <a href="#agent">Agent Control</a>
+        <a href="#quality">Quality</a>
+        <a href="#files">Files</a>
+      </nav>
+
+      <section class="workspace" id="command">
+        <div class="notice">
+          <p class="eyebrow">Internal control plane</p>
+          <h2>Local session, not a public route</h2>
+          <p>
+            This dashboard is served only by the loopback SYSTEMX LAN server.
+            It is outside Vite public routes, Firebase Hosting, and production
+            deployment output.
+          </p>
+        </div>
+
+        <div class="status-grid">
+          <article class="panel">
+            <h3>Controller</h3>
+            <output id="controller-status">Checking local controller...</output>
+          </article>
+          <article class="panel" id="agent">
+            <h3>Agent Bus</h3>
+            <output id="agent-status">Waiting for mission summary</output>
+          </article>
+          <article class="panel" id="quality">
+            <h3>Build Boundary</h3>
+            <output>Production build guard required</output>
+          </article>
+          <article class="panel" id="files">
+            <h3>KIT + Local Files</h3>
+            <output>.SYSTEMX/KIT is the reusable source catalog. Temp, Backup, and Files remain ignored runtime areas.</output>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>127.0.0.1 only</span>
+      <span>No shell endpoint</span>
+      <span>No secrets</span>
+    </footer>
+
+    <script type="module" src="/Website/dashboard.js"></script>
+  </body>
+</html>

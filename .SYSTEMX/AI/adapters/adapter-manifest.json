@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "owner": ".SYSTEMX/AI",
+  "policy": "Root/vendor paths are generated discovery stubs. Canonical AI instructions live under .SYSTEMX/AI.",
+  "canonical": ".SYSTEMX/AI/AGENTS.md",
+  "adapters": {
+    "claude": ".SYSTEMX/AI/adapters/claude.md",
+    "gemini": ".SYSTEMX/AI/adapters/gemini.md",
+    "copilot": ".SYSTEMX/AI/adapters/copilot.md",
+    "cursor": ".SYSTEMX/AI/adapters/cursor.md",
+    "windsurf": ".SYSTEMX/AI/adapters/windsurf.md",
+    "cline": ".SYSTEMX/AI/adapters/cline.md",
+    "continue": ".SYSTEMX/AI/adapters/continue.md",
+    "junie": ".SYSTEMX/AI/adapters/junie.md",
+    "amazonq": ".SYSTEMX/AI/adapters/amazonq.md"
+  }
+}
