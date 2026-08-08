@@ -70,6 +70,14 @@ npm run wtl:local -- end-day
 | `wiki/` | GitHub wiki source pages. |
 | `.SYSTEMX/` | Wayne Tech Lab operational layer, setup automation, and docs. |
 
+## Documentation Sync
+
+The canonical project docs live in this repository and the GitHub Wiki mirrors
+the Markdown files in `wiki/`. When wiki content changes, commit the `wiki/`
+source on `main` and publish the same files to
+`Bardos-Breakfast-Burgers.wiki.git` so README links, repo docs, and GitHub Wiki
+pages stay aligned.
+
 ## Template Credit
 
 This project was created from

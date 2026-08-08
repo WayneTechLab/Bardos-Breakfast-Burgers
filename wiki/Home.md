@@ -18,7 +18,7 @@ and rewards
 SYSTEMX operator tooling
 
 [Repository](https://github.com/WayneTechLab/Bardos-Breakfast-Burgers) |
-[Template Base](https://github.com/WayneTechLab/Bardos-Breakfast-Burgers) |
+[Template Base](https://github.com/WayneTechLab/SFWA-WTL-TEMPLATE) |
 [WayneTechLab.com](https://WayneTechLab.com)
 
 ## Start Here
