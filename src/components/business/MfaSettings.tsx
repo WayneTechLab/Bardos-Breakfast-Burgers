@@ -40,13 +40,13 @@ export function MfaSettings({ user }: { user: User }) {
   }
   if (isLocalFirebase)
     return (
-      <p className="ops-notice">
+      <p className="ops-notice" lang="en">
         MFA is bypassed only for this local emulator project. Staff and owner access require MFA in
         production.
       </p>
     )
   return (
-    <section className="ops-form">
+    <section className="ops-form" lang="en">
       <h2>
         <ShieldCheck size={18} />
         Account security

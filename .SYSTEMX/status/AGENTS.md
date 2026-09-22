@@ -18,8 +18,8 @@ for execution.
 | Lane | Owner | Scope | Status | Last checkpoint |
 | --- | --- | --- | --- | --- |
 | Coordinator | project owner | integration, generated files, release gate | available | — |
-| Setup/docs | unassigned | BARDOS-GH-01 / wave 1: README and reviewed publication packet complete | available | 2026-09-22 |
-| App/runtime | unassigned | BARDOS-BRAND-01 / wave 1 verified; source-backed theme, unchanged logo, all 141 menu variants | available | 2026-09-22 |
+| Setup/docs | unassigned | BARDOS-DESIGN-OVERVIEW-01 / wave 1: 37-page PDF, 40 screenshots and CSV index delivered and verified in Drive | available | 2026-09-22 |
+| App/runtime | unassigned | BARDOS-CORNER-OFFSET-01 / wave 1: page-section control detached 100px below header; desktop/mobile checks passed | available | 2026-09-22 |
 | Security/data | unassigned | rules, auth, secrets, deployment config | available | — |
 | Verification | unassigned | tests, lint, typecheck, smoke checks | available | — |
 

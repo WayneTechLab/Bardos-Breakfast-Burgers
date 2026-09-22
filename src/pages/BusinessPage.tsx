@@ -128,13 +128,13 @@ export function BusinessPage({
   const account = useAccountLevel()
   if (account.loading)
     return (
-      <div className="ops ops-gate" role="status">
+      <div className="ops ops-gate" role="status" lang="en">
         Checking access...
       </div>
     )
   if (!account.user || account.error || account.level < (customer ? 1 : 4))
     return (
-      <div className="ops ops-gate">
+      <div className="ops ops-gate" lang="en">
         <ShieldCheck size={36} />
         <h1>{account.user ? 'Access restricted' : 'Sign in to continue'}</h1>
         <p>
@@ -152,7 +152,7 @@ export function BusinessPage({
   if (!customer && !definition) return <NotFoundPage />
   if (!customer && (!definition || definition.level > account.level))
     return (
-      <div className="ops ops-gate">
+      <div className="ops ops-gate" lang="en">
         <h1>Owner access required</h1>
         <AppLink to="/manage">Return to overview</AppLink>
       </div>
@@ -306,7 +306,7 @@ function WorkspaceView({ module, customer }: { module: string; customer: boolean
       : String(record[key] ?? '-')
   }
   return (
-    <div className={`ops ops-shell ${customer ? 'customer-shell' : ''}`}>
+    <div lang="en" className={`ops ops-shell ${customer ? 'customer-shell' : ''}`}>
       {!customer && (
         <aside className="ops-sidebar">
           <p className="ops-sidebar-title">Restaurant</p>

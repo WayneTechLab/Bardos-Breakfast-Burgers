@@ -1,3 +1,4 @@
+import { useLanguage } from '@/i18n/useLanguage'
 import { useState, type FormEvent } from 'react'
 import {
   createUserWithEmailAndPassword,
@@ -20,6 +21,7 @@ import { errorMessage } from '@/lib/business'
 import { MfaSettings } from '@/components/business/MfaSettings'
 
 export function LoginPage() {
+  const { t } = useLanguage()
   const account = useAccountLevel()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -60,20 +62,20 @@ export function LoginPage() {
   return (
     <section className="login-page ops">
       <img src="/assets/bardos-logo.png" alt="Bardo's" width="112" height="112" />
-      <h1>{account.user ? 'Your account' : register ? 'Create an account' : 'Welcome back'}</h1>
-      {isLocalFirebase && <p className="ops-notice">Local Firebase development</p>}
+      <h1>{t(account.user ? 'Your account' : register ? 'Create an account' : 'Welcome back')}</h1>
+      {isLocalFirebase && <p className="ops-notice">{t('Local Firebase development')}</p>}
       {(message || account.error) && (
         <p
           role={failed || account.error ? 'alert' : 'status'}
           className={failed || account.error ? 'ops-error' : 'ops-notice'}
         >
-          {message || account.error}
+          {t(message || account.error || '')}
         </p>
       )}
       {resolver && (
         <div className="ops-form">
           <label>
-            Authenticator code
+            {t('Authenticator code')}
             <input
               autoComplete="one-time-code"
               inputMode="numeric"
@@ -101,27 +103,27 @@ export function LoginPage() {
               })
             }
           >
-            Verify and sign in
+            {t('Verify and sign in')}
           </button>
         </div>
       )}
       {!auth ? (
-        <p role="status">Sign-in is currently unavailable. Please try again later.</p>
+        <p role="status">{t('Sign-in is currently unavailable. Please try again later.')}</p>
       ) : account.loading ? (
-        <p role="status">Checking your account...</p>
+        <p role="status">{t('Checking your account...')}</p>
       ) : account.user ? (
         <>
           <p>{account.user.email}</p>
           <p>
-            Level {account.level} · {account.definition.label}
+            {t('Level')} {account.level} · {t(account.definition.label)}
           </p>
           <div className="ops-actions">
             <AppLink className="ops-primary" to={account.level >= 4 ? '/manage' : '/account'}>
-              Open {account.level >= 4 ? 'restaurant workspace' : 'my orders'}
+              {t(account.level >= 4 ? 'Open restaurant workspace' : 'Open my orders')}
             </AppLink>
             <button disabled={busy} onClick={() => run(() => signOut(auth!))}>
               <LogOut size={16} />
-              Sign out
+              {t('Sign out')}
             </button>
           </div>
           {!account.user.emailVerified && (
@@ -135,7 +137,7 @@ export function LoginPage() {
               }
             >
               <Mail size={16} />
-              Verify email
+              {t('Verify email')}
             </button>
           )}
           <MfaSettings user={account.user} />
@@ -151,7 +153,7 @@ export function LoginPage() {
               }
             >
               <RefreshCw size={16} />
-              Recheck account
+              {t('Recheck account')}
             </button>
           )}
         </>
@@ -159,7 +161,7 @@ export function LoginPage() {
         <>
           <form onSubmit={submit} className="ops-form">
             <label>
-              Email
+              {t('Email')}
               <input
                 required
                 disabled={busy}
@@ -170,7 +172,7 @@ export function LoginPage() {
               />
             </label>
             <label>
-              Password
+              {t('Password')}
               <span className="password-field">
                 <input
                   required
@@ -184,25 +186,25 @@ export function LoginPage() {
                 <button
                   type="button"
                   disabled={busy}
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
-                  title={showPassword ? 'Hide password' : 'Show password'}
+                  aria-label={t(showPassword ? 'Hide password' : 'Show password')}
+                  title={t(showPassword ? 'Hide password' : 'Show password')}
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </span>
-              {register && <small>At least 12 characters.</small>}
+              {register && <small>{t('At least 12 characters.')}</small>}
             </label>
             <button className="ops-primary" disabled={busy}>
               <LogIn size={16} />
-              {busy ? 'Please wait...' : register ? 'Create account' : 'Sign in'}
+              {t(busy ? 'Please wait...' : register ? 'Create account' : 'Sign in')}
             </button>
           </form>
           <button
             disabled={busy}
             onClick={() => run(() => signInWithPopup(auth!, new GoogleAuthProvider()))}
           >
-            Continue with Google
+            {t('Continue with Google')}
           </button>
           <div className="ops-actions">
             <button
@@ -212,7 +214,7 @@ export function LoginPage() {
                 setMessage('')
               }}
             >
-              {register ? 'Use existing account' : 'Create account'}
+              {t(register ? 'Use existing account' : 'Create account')}
             </button>
             <button
               disabled={!email || busy}
@@ -223,7 +225,7 @@ export function LoginPage() {
                 })
               }
             >
-              Reset password
+              {t('Reset password')}
             </button>
           </div>
         </>
@@ -236,7 +238,7 @@ export function LoginPage() {
             setMessage('')
           }}
         >
-          Back to sign in
+          {t('Back to sign in')}
         </button>
       )}
     </section>

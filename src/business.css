@@ -99,7 +99,7 @@
 .ops-shell {
   display: grid;
   grid-template-columns: 210px minmax(0, 1fr);
-  min-height: calc(100dvh - 76px);
+  min-height: calc(100dvh - 128px);
 }
 .ops-sidebar {
   border-right: 1px solid #d8dcdf;

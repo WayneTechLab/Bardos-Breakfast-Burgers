@@ -14,6 +14,7 @@
     "test:restaurant-ui": "node scripts/test-restaurant-ui.mjs",
     "test:uiux": "node scripts/test-uiux.mjs",
     "test:brand": "node scripts/test-brand.mjs",
+    "test:language": "node scripts/test-language.mjs",
     "dev": "vite",
     "dev:systemx": "node .SYSTEMX/LAN/runner.mjs vite",
     "build": "tsc -b --noCheck && vite build",

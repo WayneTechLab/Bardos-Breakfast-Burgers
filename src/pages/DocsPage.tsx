@@ -1,3 +1,4 @@
+import { useLanguage } from '@/i18n/useLanguage'
 import { AppLink } from '@/components/navigation/AppLink'
 
 const questions = [
@@ -54,35 +55,36 @@ const questions = [
   },
 ]
 export function DocsPage() {
+  const { t } = useLanguage()
   return (
     <article className="public-wrap public-page help-page">
       <header className="public-intro">
-        <p className="eyebrow">Bardo's support</p>
-        <h1>Ordering &amp; help</h1>
-        <p>A few answers before you order.</p>
+        <p className="eyebrow">{t("Bardo's support")}</p>
+        <h1>{t('Ordering & help')}</h1>
+        <p>{t('A few answers before you order.')}</p>
       </header>
       {questions.map((section) => (
         <section
           key={section.id}
           id={section.id}
-          data-page-section={section.title}
+          data-page-section={t(section.title)}
           className="faq-section"
         >
-          <h2>{section.title}</h2>
+          <h2>{t(section.title)}</h2>
           {section.entries.map(([question, answer]) => (
             <details key={question}>
-              <summary>{question}</summary>
-              <p>{answer}</p>
+              <summary>{t(question)}</summary>
+              <p>{t(answer)}</p>
             </details>
           ))}
         </section>
       ))}
       <div className="public-actions">
         <AppLink to="/contact" className="public-button">
-          Contact the team
+          {t('Contact the team')}
         </AppLink>
         <AppLink to="/account" className="public-button secondary">
-          My orders
+          {t('My orders')}
         </AppLink>
       </div>
     </article>

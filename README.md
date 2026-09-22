@@ -36,6 +36,15 @@ Firebase on the Wayne Tech Lab **S.F.W.A. / .SYSTEMX Forever WebApp** foundation
   pages, with responsive layouts, keyboard navigation and offline/error states.
 - Top-left in-page section navigation, top-right site menu and bottom-right
   page controls. Mobile page controls sit in a separate bottom bar.
+- The approved logo stays at the top left of the header. The page-section button
+  is fixed outside the header, 100px below its bottom edge, with content clearance
+  on narrow screens. The settings
+  cog offers English / Español, remembers the selection locally and synchronizes
+  it across tabs. Public pages, sign-in, menu categories, source menu items and
+  print copy are translated; IDs, prices and stored records are unchanged.
+  Private ordering/staff screens and custom CMS content remain in English.
+  New or edited menu copy falls back to its source text until its exact wording
+  has a translation in `src/i18n/spanish.ts`.
 
 The browser print view shares the website's menu data and theme; the verified
 sample is five Letter pages. It is not a press-ready CMYK/bleed package.
@@ -126,6 +135,7 @@ npm run test:emulators
 npm run test:restaurant-ui
 npm run test:uiux
 npm run test:brand
+npm run test:language
 npm audit --prefix functions
 npm run wtl:sync -- --check
 npm run wtl:deploy -- --preflight

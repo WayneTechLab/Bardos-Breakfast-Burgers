@@ -1,3 +1,4 @@
+import { useLanguage } from '@/i18n/useLanguage'
 import { ArrowRight, Star, UtensilsCrossed } from 'lucide-react'
 import { AppLink } from '@/components/navigation/AppLink'
 import { PublishedContent } from '@/components/business/PublishedContent'
@@ -15,6 +16,7 @@ const highlights = [
 ]
 
 export function HomePage() {
+  const { t } = useLanguage()
   const { items } = useMenu()
   return (
     <>
@@ -29,16 +31,16 @@ export function HomePage() {
         <div className="brand-rule" aria-hidden="true">
           <Star size={16} fill="currentColor" />
         </div>
-        <h1>Breakfast &amp; Burgers</h1>
-        <p className="brand-ribbon">Good Food. Great Times.</p>
-        <p className="masthead-intro">Great food. Great people. Great memories.</p>
+        <h1>{t('Breakfast & Burgers')}</h1>
+        <p className="brand-ribbon">{t('Good Food. Great Times.')}</p>
+        <p className="masthead-intro">{t('Great food. Great people. Great memories.')}</p>
         <div className="public-actions">
           <AppLink to="/services" className="public-button">
             <UtensilsCrossed size={18} />
-            Full menu
+            {t('Full menu')}
           </AppLink>
           <AppLink to="/order" className="public-button secondary">
-            Order online
+            {t('Order online')}
             <ArrowRight size={18} />
           </AppLink>
         </div>
@@ -46,15 +48,15 @@ export function HomePage() {
       <section
         className="public-wrap menu-preview"
         id="on-the-menu"
-        data-page-section="On the menu"
+        data-page-section={t('On the menu')}
       >
         <div className="section-heading">
           <div>
-            <p className="eyebrow">From the menu</p>
-            <h2>What sounds good?</h2>
+            <p className="eyebrow">{t('From the menu')}</p>
+            <h2>{t('What sounds good?')}</h2>
           </div>
           <AppLink to="/services" className="text-link">
-            All sections
+            {t('All sections')}
             <ArrowRight size={17} />
           </AppLink>
         </div>
@@ -63,11 +65,11 @@ export function HomePage() {
             <div key={category.id} className="menu-preview-column">
               <h3>
                 <AppLink to={`/services#${category.id.replaceAll('_', '-')}`}>
-                  {category.title}
+                  {t(category.title)}
                   <ArrowRight size={18} />
                 </AppLink>
               </h3>
-              <p>{category.note}</p>
+              <p>{t(category.note)}</p>
               <ul>
                 {items
                   .filter((item) => item.active && item.categoryId === category.id)
@@ -75,8 +77,8 @@ export function HomePage() {
                   .map((item) => (
                     <li key={item.sku}>
                       <span>
-                        {item.displayName}
-                        {item.variantLabel && <small>{item.variantLabel}</small>}
+                        {t(item.displayName)}
+                        {item.variantLabel && <small>{t(item.variantLabel)}</small>}
                       </span>
                       <strong>{money(item.priceCents)}</strong>
                     </li>
@@ -87,15 +89,15 @@ export function HomePage() {
         </div>
       </section>
       <PublishedContent />
-      <section className="public-band" id="get-in-touch" data-page-section="Get in touch">
+      <section className="public-band" id="get-in-touch" data-page-section={t('Get in touch')}>
         <div className="public-wrap section-heading">
           <div>
-            <p className="eyebrow">Questions for Bardo's?</p>
-            <h2>Let's talk.</h2>
-            <p>Menu questions, order support, or a request for the restaurant team.</p>
+            <p className="eyebrow">{t("Questions for Bardo's?")}</p>
+            <h2>{t("Let's talk.")}</h2>
+            <p>{t('Menu questions, order support, or a request for the restaurant team.')}</p>
           </div>
           <AppLink to="/contact" className="public-button">
-            Contact us
+            {t('Contact us')}
             <ArrowRight size={18} />
           </AppLink>
         </div>

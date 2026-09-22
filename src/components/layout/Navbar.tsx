@@ -5,14 +5,16 @@ import {
   ArrowUp,
   ArrowUpToLine,
   List,
+  Languages,
   Menu,
   Printer,
-  SlidersHorizontal,
+  Settings,
   X,
 } from 'lucide-react'
 import { AppLink } from '@/components/navigation/AppLink'
 import { isActivePath } from '@/lib/navigation'
 import { useAccountLevel } from '@/auth/useAccountLevel'
+import { useLanguage } from '@/i18n/useLanguage'
 
 const links = [
   { to: '/', label: 'Home' },
@@ -25,16 +27,18 @@ type Section = { id: string; label: string; element: HTMLElement }
 type Panel = 'sections' | 'site' | 'controls'
 
 export function Navbar({ currentPath }: { currentPath: string }) {
+  const { language, setLanguage, t } = useLanguage()
   const account = useAccountLevel()
   const [panel, setPanel] = useState<Panel | null>(null)
   const [sections, setSections] = useState<Section[]>([])
   const [active, setActive] = useState('mainpoints')
-  const root = useRef<HTMLElement>(null)
+  const root = useRef<HTMLDivElement>(null)
+  const header = useRef<HTMLElement>(null)
   const trigger = useRef<HTMLButtonElement | null>(null)
 
   useEffect(() => {
     const main = document.querySelector('main')!
-    let all: Section[] = [{ id: 'mainpoints', label: 'Overview', element: main }]
+    let all: Section[] = [{ id: 'mainpoints', label: t('Overview'), element: main }]
     let discoveryFrame = 0
     let restoredHash = ''
     let followInitialHash = Boolean(window.location.hash)
@@ -53,7 +57,7 @@ export function Navbar({ currentPath }: { currentPath: string }) {
           .map((element) => element.id),
       )
       const discovered = targets.map((element) => {
-        const label = element.dataset.pageSection || element.textContent?.trim() || 'Section'
+        const label = element.dataset.pageSection || element.textContent?.trim() || t('Section')
         const base =
           element.id ||
           label
@@ -69,7 +73,7 @@ export function Navbar({ currentPath }: { currentPath: string }) {
         element.classList.add('page-snap-point')
         return { id, label, element }
       })
-      all = [{ id: 'mainpoints', label: 'Overview', element: main }, ...discovered]
+      all = [{ id: 'mainpoints', label: t('Overview'), element: main }, ...discovered]
       cancelAnimationFrame(discoveryFrame)
       discoveryFrame = requestAnimationFrame(() => {
         setSections(all)
@@ -80,7 +84,8 @@ export function Navbar({ currentPath }: { currentPath: string }) {
     const update = () => {
       cancelAnimationFrame(frame)
       frame = requestAnimationFrame(() => {
-        const reached = all.filter((s) => s.element.getBoundingClientRect().top <= 130)
+        const snapLine = (header.current?.getBoundingClientRect().bottom || 128) + 54
+        const reached = all.filter((s) => s.element.getBoundingClientRect().top <= snapLine)
         const last = reached.at(-1) || all[0]
         const linked = all.find((s) => `#${s.id}` === window.location.hash)
         // Adjacent desktop columns share a scroll position; retain the chosen anchor.
@@ -106,7 +111,13 @@ export function Navbar({ currentPath }: { currentPath: string }) {
     }
     discover()
     const observer = new MutationObserver(discover)
-    observer.observe(main, { childList: true, subtree: true, characterData: true })
+    observer.observe(main, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ['data-page-section'],
+    })
     const resizeObserver = new ResizeObserver(() => {
       if (followInitialHash) restoreHash()
     })
@@ -133,12 +144,14 @@ export function Navbar({ currentPath }: { currentPath: string }) {
       window.removeEventListener('hashchange', restoreHash)
       window.removeEventListener('popstate', restoreHash)
     }
-  }, [currentPath])
+  }, [currentPath, t])
 
   useEffect(() => {
     if (!panel) return
     root.current
-      ?.querySelector<HTMLElement>(`#corner-${panel} a, #corner-${panel} button:not(:disabled)`)
+      ?.querySelector<HTMLElement>(
+        `#corner-${panel} a, #corner-${panel} select, #corner-${panel} button:not(:disabled)`,
+      )
       ?.focus()
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -176,8 +189,8 @@ export function Navbar({ currentPath }: { currentPath: string }) {
       <button
         type="button"
         className="corner-button"
-        aria-label={label}
-        title={label}
+        aria-label={t(label)}
+        title={t(label)}
         aria-expanded={panel === kind}
         aria-controls={panel === kind ? `corner-${kind}` : undefined}
         onClick={(event) => {
@@ -195,16 +208,67 @@ export function Navbar({ currentPath }: { currentPath: string }) {
     sections.findIndex((s) => s.id === active),
   )
   return (
-    <header ref={root} className="site-header print:hidden">
-      <a className="skip-link" href="#mainpoints">
-        Skip to content
-      </a>
+    <div ref={root} className="site-navigation print:hidden">
+      <header ref={header} className="site-header">
+        <a className="skip-link" href="#mainpoints">
+          {t('Skip to content')}
+        </a>
+        <div className="corner-brand-stack">
+          <AppLink
+            to="/"
+            className="header-logo"
+            aria-label={t('Home')}
+            onClick={() => setPanel(null)}
+          >
+            <img
+              src="/assets/bardos-logo.png"
+              alt="Bardo's Breakfast & Burgers"
+              width="52"
+              height="52"
+            />
+          </AppLink>
+        </div>
+        <AppLink to="/" className="site-brand" onClick={() => setPanel(null)}>
+          <span>
+            Bardo's <span className="brand-subtitle">{t('Breakfast & Burgers')}</span>
+          </span>
+        </AppLink>
+        <div className="corner-right">
+          {toggleButton('site', 'Site menu', <Menu size={23} />)}
+          {panel === 'site' && (
+            <nav id="corner-site" className="corner-panel" aria-label={t('Site navigation')}>
+              <p className="corner-title">Bardo's</p>
+              {links.map((link) => (
+                <AppLink
+                  key={link.to}
+                  to={link.to}
+                  aria-current={isActivePath(currentPath, link.to) ? 'page' : undefined}
+                  onClick={() => setPanel(null)}
+                >
+                  {t(link.label)}
+                </AppLink>
+              ))}
+              <AppLink to="/order" onClick={() => setPanel(null)}>
+                {t('Order online')}
+              </AppLink>
+              <AppLink to={account.user ? '/account' : '/login'} onClick={() => setPanel(null)}>
+                {t(account.user ? 'My account' : 'Sign in')}
+              </AppLink>
+              {account.level >= 4 && (
+                <AppLink to="/manage" onClick={() => setPanel(null)}>
+                  {t('Restaurant workspace')}
+                </AppLink>
+              )}
+            </nav>
+          )}
+        </div>
+      </header>
       <div className="corner-left">
         {toggleButton('sections', 'On this page', <List size={21} />)}
         {panel === 'sections' && (
-          <nav id="corner-sections" className="corner-panel" aria-label="On this page">
+          <nav id="corner-sections" className="corner-panel" aria-label={t('On this page')}>
             <p className="corner-title">
-              {currentPath === '/services' ? 'Menu sections' : 'On this page'}
+              {t(currentPath === '/services' ? 'Menu sections' : 'On this page')}
             </p>
             {sections.map((s) => (
               <a
@@ -224,66 +288,50 @@ export function Navbar({ currentPath }: { currentPath: string }) {
           </nav>
         )}
       </div>
-      <AppLink to="/" className="site-brand" onClick={() => setPanel(null)}>
-        <span>
-          Bardo's <span className="brand-subtitle">Breakfast &amp; Burgers</span>
-        </span>
-      </AppLink>
-      <div className="corner-right">
-        {toggleButton('site', 'Site menu', <Menu size={23} />)}
-        {panel === 'site' && (
-          <nav id="corner-site" className="corner-panel" aria-label="Site navigation">
-            <p className="corner-title">Bardo's</p>
-            {links.map((link) => (
-              <AppLink
-                key={link.to}
-                to={link.to}
-                aria-current={isActivePath(currentPath, link.to) ? 'page' : undefined}
-                onClick={() => setPanel(null)}
-              >
-                {link.label}
-              </AppLink>
-            ))}
-            <AppLink to="/order" onClick={() => setPanel(null)}>
-              Order online
-            </AppLink>
-            <AppLink to={account.user ? '/account' : '/login'} onClick={() => setPanel(null)}>
-              {account.user ? 'My account' : 'Sign in'}
-            </AppLink>
-            {account.level >= 4 && (
-              <AppLink to="/manage" onClick={() => setPanel(null)}>
-                Restaurant workspace
-              </AppLink>
-            )}
-          </nav>
-        )}
-      </div>
       <div className="corner-bottom">
         <p className="corner-current" aria-hidden="true">
-          {sections[activeIndex]?.label || 'Overview'}
+          {sections[activeIndex]?.label || t('Overview')}
         </p>
         {panel === 'controls' && (
           <div
             id="corner-controls"
             className="corner-panel"
             role="group"
-            aria-label="Page controls"
+            aria-label={t('Page controls')}
           >
-            <p className="corner-title">Page controls</p>
+            <label className="corner-language" htmlFor="site-language">
+              <span>
+                <Languages size={18} aria-hidden="true" />
+                {t('Language')}
+              </span>
+              <select
+                id="site-language"
+                value={language}
+                onChange={(event) => setLanguage(event.target.value === 'es' ? 'es' : 'en')}
+              >
+                <option value="en" lang="en">
+                  English
+                </option>
+                <option value="es" lang="es">
+                  Español
+                </option>
+              </select>
+            </label>
+            <p className="corner-title">{t('Page controls')}</p>
             <button onClick={() => sections[0] && jump(sections[0])}>
               <ArrowUpToLine size={18} />
-              Back to top
+              {t('Back to top')}
             </button>
             <button disabled={activeIndex === 0} onClick={() => jump(sections[activeIndex - 1])}>
               <ArrowUp size={18} />
-              Previous section
+              {t('Previous section')}
             </button>
             <button
               disabled={activeIndex >= sections.length - 1}
               onClick={() => jump(sections[activeIndex + 1])}
             >
               <ArrowDown size={18} />
-              Next section
+              {t('Next section')}
             </button>
             <button
               onClick={() => {
@@ -298,7 +346,7 @@ export function Navbar({ currentPath }: { currentPath: string }) {
               }}
             >
               <ArrowDownToLine size={18} />
-              Bottom of page
+              {t('Bottom of page')}
             </button>
             <button
               onClick={() => {
@@ -307,12 +355,12 @@ export function Navbar({ currentPath }: { currentPath: string }) {
               }}
             >
               <Printer size={18} />
-              Print page
+              {t('Print page')}
             </button>
           </div>
         )}
-        {toggleButton('controls', 'Page controls', <SlidersHorizontal size={21} />)}
+        {toggleButton('controls', 'Page controls', <Settings size={21} />)}
       </div>
-    </header>
+    </div>
   )
 }

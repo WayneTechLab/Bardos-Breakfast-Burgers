@@ -10,6 +10,7 @@ import { LoginPage } from '@/pages/LoginPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { BusinessPage } from '@/pages/BusinessPage'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
+import { useLanguage } from '@/i18n/useLanguage'
 
 function getPathname() {
   return normalizePath(window.location.pathname)
@@ -39,6 +40,7 @@ function renderPage(pathname: string) {
 }
 
 export function AppRouter() {
+  const { t } = useLanguage()
   const [pathname, setPathname] = useState(getPathname)
 
   useEffect(() => {
@@ -73,7 +75,7 @@ export function AppRouter() {
       titles[pathname] ||
       (pathname.startsWith('/manage') ? moduleNames[pathname.split('/')[2] || 'overview'] : '') ||
       'Page Not Found'
-    document.title = `${title} | Bardo's Breakfast Burgers`
+    document.title = `${t(title)} | Bardo's Breakfast Burgers`
     document
       .querySelector('meta[name="robots"]')
       ?.setAttribute(
@@ -82,7 +84,7 @@ export function AppRouter() {
           ? 'noindex,nofollow'
           : 'index,follow',
       )
-  }, [pathname])
+  }, [pathname, t])
 
   useEffect(() => {
     const handleNavigation = () => setPathname(getPathname())

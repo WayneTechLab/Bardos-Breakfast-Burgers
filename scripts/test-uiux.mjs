@@ -149,7 +149,7 @@ try {
   assert.equal(new URL(page.url()).hash, '#burgers')
   assert.ok(
     Math.abs(
-      (await page.locator('#burgers').evaluate((el) => el.getBoundingClientRect().top)) - 96,
+      (await page.locator('#burgers').evaluate((el) => el.getBoundingClientRect().top)) - 148,
     ) < 4,
   )
   await page.getByRole('button', { name: 'On this page', exact: true }).click()
@@ -173,7 +173,7 @@ try {
   await page.getByRole('link', { name: 'Burgers', exact: true }).click()
   assert.equal(new URL(page.url()).hash, '#burgers')
   await page.waitForFunction(
-    () => Math.abs(document.querySelector('#burgers').getBoundingClientRect().top - 96) < 4,
+    () => Math.abs(document.querySelector('#burgers').getBoundingClientRect().top - 148) < 4,
   )
   report.checks.push(
     '141 source SKUs preserved; search; print includes all items; category jump; corner menus; Escape focus; cross-route deep link',

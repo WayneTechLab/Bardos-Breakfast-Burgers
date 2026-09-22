@@ -1,3 +1,4 @@
+import { useLanguage } from '@/i18n/useLanguage'
 import { useEffect, useState, type ReactNode } from 'react'
 import { Navbar } from './Navbar'
 import { Footer } from './Footer'
@@ -8,6 +9,7 @@ type LayoutProps = {
 }
 
 export function Layout({ children, currentPath }: LayoutProps) {
+  const { t } = useLanguage()
   const [offline, setOffline] = useState(!navigator.onLine)
   useEffect(() => {
     const update = () => setOffline(!navigator.onLine)
@@ -19,12 +21,14 @@ export function Layout({ children, currentPath }: LayoutProps) {
     }
   }, [])
   return (
-    <div className={`site-shell flex min-h-full flex-col ${currentPath.startsWith('/manage') ? 'staff-theme' : 'public-theme'}`}>
+    <div
+      className={`site-shell flex min-h-full flex-col ${currentPath.startsWith('/manage') ? 'staff-theme' : 'public-theme'}`}
+    >
       <Navbar key={currentPath} currentPath={currentPath} />
       <main id="mainpoints" tabIndex={-1} className="flex-1 page-snap-point">
         {offline && (
           <p className="offline-notice" role="status">
-            You're offline. Orders and changes cannot be saved until your connection returns.
+            {t("You're offline. Orders and changes cannot be saved until your connection returns.")}
           </p>
         )}
         {children}
