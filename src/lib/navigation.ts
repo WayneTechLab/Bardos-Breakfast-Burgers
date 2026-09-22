@@ -17,5 +17,15 @@ export function navigate(to: string) {
   const target = to.startsWith('/') ? to : `/${to}`
   window.history.pushState({}, '', target)
   window.dispatchEvent(new Event(NAVIGATION_EVENT))
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+  requestAnimationFrame(() => {
+    let id = 'mainpoints'
+    try {
+      id = decodeURIComponent(window.location.hash.slice(1)) || id
+    } catch {
+      /* Use the page start for malformed hashes. */
+    }
+    const target = document.getElementById(id)
+    target?.focus({ preventScroll: true })
+    target?.scrollIntoView({ block: 'start', behavior: 'instant' })
+  })
 }

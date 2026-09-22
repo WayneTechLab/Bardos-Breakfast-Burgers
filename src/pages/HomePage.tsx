@@ -1,102 +1,105 @@
+import { ArrowRight, Star, UtensilsCrossed } from 'lucide-react'
 import { AppLink } from '@/components/navigation/AppLink'
-import { Clock, MapPin, Star } from 'lucide-react'
+import { PublishedContent } from '@/components/business/PublishedContent'
+import { useMenu } from '@/data/useMenu'
+import { money } from '@/lib/business'
 
-const sections = [
+const highlights = [
   {
-    title: 'Breakfast all day',
-    body: 'Eggs, sausage, bacon, hash browns, and griddled buns built for early shifts and late starts.',
+    id: 'breakfast_specials',
+    title: 'Breakfast Specials',
+    note: 'Start with the breakfast board.',
   },
-  {
-    title: 'Smash burgers',
-    body: 'Crispy edges, melty cheese, house sauce, and local produce where the season allows.',
-  },
-  {
-    title: 'Salem pickup flow',
-    body: 'A foundation for online ordering, wait times, loyalty accounts, and catering requests.',
-  },
-  {
-    title: 'Family-friendly counter',
-    body: 'Fast casual service with bold branding, simple navigation, and room for specials.',
-  },
+  { id: 'burgers', title: 'Burgers', note: 'Find your next favorite.' },
+  { id: 'lunch', title: 'Lunch', note: 'Something for the rest of the day.' },
 ]
 
 export function HomePage() {
+  const { items } = useMenu()
   return (
-    <section>
-      <div className="bg-stone-950 text-white">
-        <div className="mx-auto grid min-h-[calc(100vh-74px)] max-w-6xl items-center gap-10 px-4 py-12 md:grid-cols-[1fr_0.78fr]">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-wide text-yellow-400">
-              Salem, Oregon / Est. 2014
-            </p>
-            <h1 className="mt-4 max-w-4xl text-5xl font-black tracking-tight sm:text-7xl">
-              Bardo's Breakfast Burgers
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-200">
-              A local restaurant webapp concept for bold breakfast plates,
-              stacked burgers, online pickup, specials, rewards, and catering
-              requests from one clean storefront.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <AppLink
-                to="/services"
-                className="rounded-md bg-red-700 px-5 py-3 text-sm font-semibold text-white hover:bg-red-800"
-              >
-                View menu
-              </AppLink>
-              <AppLink
-                to="/contact"
-                className="rounded-md border border-yellow-400 px-5 py-3 text-sm font-semibold text-yellow-300 hover:bg-yellow-400 hover:text-stone-950"
-              >
-                Plan a pickup
-              </AppLink>
-            </div>
-            <div className="mt-10 grid gap-4 text-sm text-stone-200 sm:grid-cols-3">
-              <p className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-yellow-400" /> Breakfast, lunch,
-                and weekend specials
-              </p>
-              <p className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-yellow-400" /> Salem, OR
-              </p>
-              <p className="flex items-center gap-2">
-                <Star className="h-4 w-4 text-yellow-400" /> Rewards-ready
-                account flow
-              </p>
-            </div>
-          </div>
-          <img
-            src="/assets/bardos-logo.png"
-            alt="Bardo's Breakfast Burgers logo"
-            className="mx-auto aspect-square w-full max-w-md object-contain drop-shadow-2xl"
-          />
+    <>
+      <section className="brand-masthead brand-paper">
+        <img
+          src="/assets/bardos-logo.png"
+          alt="Bardo's, established 2014"
+          width="180"
+          height="180"
+          fetchPriority="high"
+        />
+        <div className="brand-rule" aria-hidden="true">
+          <Star size={16} fill="currentColor" />
         </div>
-      </div>
-
-      <div className="mx-auto max-w-6xl px-4 py-14">
-        <p className="text-sm font-semibold uppercase tracking-wide text-red-700">
-          Webapp concept
-        </p>
-        <h2 className="mt-3 max-w-3xl text-3xl font-bold tracking-tight text-stone-950 sm:text-4xl">
-          Built for ordering, discovery, and day-to-day restaurant operations.
-        </h2>
-        <p className="mt-5 max-w-3xl text-base leading-7 text-stone-600">
-          This base keeps the Wayne Tech Lab SYSTEMX webapp foundation while
-          replacing the generic shell with a restaurant-ready customer
-          experience for Bardo's.
-        </p>
-
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {sections.map((item) => (
-          <div key={item.title} className="border border-stone-200 bg-white p-6">
-            <h3 className="text-base font-semibold text-stone-950">{item.title}</h3>
-            <p className="mt-3 text-sm leading-6 text-stone-600">
-              {item.body}
-            </p>
+        <h1>Breakfast &amp; Burgers</h1>
+        <p className="brand-ribbon">Good Food. Great Times.</p>
+        <p className="masthead-intro">Great food. Great people. Great memories.</p>
+        <div className="public-actions">
+          <AppLink to="/services" className="public-button">
+            <UtensilsCrossed size={18} />
+            Full menu
+          </AppLink>
+          <AppLink to="/order" className="public-button secondary">
+            Order online
+            <ArrowRight size={18} />
+          </AppLink>
+        </div>
+      </section>
+      <section
+        className="public-wrap menu-preview"
+        id="on-the-menu"
+        data-page-section="On the menu"
+      >
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">From the menu</p>
+            <h2>What sounds good?</h2>
           </div>
-        ))}
-      </div>
-      </div>
-    </section>
+          <AppLink to="/services" className="text-link">
+            All sections
+            <ArrowRight size={17} />
+          </AppLink>
+        </div>
+        <div className="menu-preview-grid">
+          {highlights.map((category) => (
+            <div key={category.id} className="menu-preview-column">
+              <h3>
+                <AppLink to={`/services#${category.id.replaceAll('_', '-')}`}>
+                  {category.title}
+                  <ArrowRight size={18} />
+                </AppLink>
+              </h3>
+              <p>{category.note}</p>
+              <ul>
+                {items
+                  .filter((item) => item.active && item.categoryId === category.id)
+                  .slice(0, 3)
+                  .map((item) => (
+                    <li key={item.sku}>
+                      <span>
+                        {item.displayName}
+                        {item.variantLabel && <small>{item.variantLabel}</small>}
+                      </span>
+                      <strong>{money(item.priceCents)}</strong>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+      <PublishedContent />
+      <section className="public-band" id="get-in-touch" data-page-section="Get in touch">
+        <div className="public-wrap section-heading">
+          <div>
+            <p className="eyebrow">Questions for Bardo's?</p>
+            <h2>Let's talk.</h2>
+            <p>Menu questions, order support, or a request for the restaurant team.</p>
+          </div>
+          <AppLink to="/contact" className="public-button">
+            Contact us
+            <ArrowRight size={18} />
+          </AppLink>
+        </div>
+      </section>
+    </>
   )
 }

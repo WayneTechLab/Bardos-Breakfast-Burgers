@@ -18,8 +18,8 @@ for execution.
 | Lane | Owner | Scope | Status | Last checkpoint |
 | --- | --- | --- | --- | --- |
 | Coordinator | project owner | integration, generated files, release gate | available | — |
-| Setup/docs | unassigned | `.SYSTEMX`, README, wiki, runbooks | available | — |
-| App/runtime | unassigned | `src/`, Firebase client behavior | available | — |
+| Setup/docs | unassigned | BARDOS-GH-01 / wave 1: README and reviewed publication packet complete | available | 2026-09-22 |
+| App/runtime | unassigned | BARDOS-BRAND-01 / wave 1 verified; source-backed theme, unchanged logo, all 141 menu variants | available | 2026-09-22 |
 | Security/data | unassigned | rules, auth, secrets, deployment config | available | — |
 | Verification | unassigned | tests, lint, typecheck, smoke checks | available | — |
 

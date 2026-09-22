@@ -16,6 +16,7 @@ dist-ssr
 *.secret
 *secrets*
 !*.secrets.env.example
+!.SYSTEMX/Template/steps/04-env-and-secrets.md
 *.bak
 
 # Project build-spec ingested during production setup (may hold proprietary info)

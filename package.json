@@ -5,6 +5,15 @@
   "type": "module",
   "description": "Bardo's Breakfast Burgers webapp concept for a local breakfast and burger restaurant in Salem, Oregon.",
   "scripts": {
+    "local:firebase": "node scripts/local-firebase.mjs start",
+    "local:firebase:stop": "node scripts/local-firebase.mjs stop",
+    "local:firebase:status": "node scripts/local-firebase.mjs status",
+    "local:seed": "node scripts/seed-local.mjs",
+    "test:business": "node --test functions/tests/*.test.mjs",
+    "test:emulators": "node scripts/test-emulators.mjs",
+    "test:restaurant-ui": "node scripts/test-restaurant-ui.mjs",
+    "test:uiux": "node scripts/test-uiux.mjs",
+    "test:brand": "node scripts/test-brand.mjs",
     "dev": "vite",
     "dev:systemx": "node .SYSTEMX/LAN/runner.mjs vite",
     "build": "tsc -b --noCheck && vite build",
@@ -53,7 +62,7 @@
     "mcp:chrome": "npx --no-install chrome-devtools-mcp --help",
     "ci:lint": "eslint . --max-warnings=0",
     "ci:typecheck": "tsc --noEmit -p tsconfig.json",
-    "ci:test": "npm run test",
+    "ci:test": "npm run test && npm run test:business",
     "ci:build": "vite build",
     "ci:audit": "npm audit --audit-level=high",
     "ci:security": "node .SYSTEMX/scripts/security-check.mjs && node .SYSTEMX/scripts/account-level-check.mjs && node .SYSTEMX/scripts/auth-mfa-readiness-check.mjs",
@@ -67,6 +76,7 @@
     "react-dom": "^19.2.4"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@eslint/js": "^9.39.4",
     "@tailwindcss/vite": "^4.1.18",
     "@types/react": "^19.2.7",

@@ -95,7 +95,9 @@ function checkRules() {
       warn('firestore.rules has no explicit MFA-sensitive collection stubs; add deny rules when enabling MFA storage')
     }
 
-    const blocksPrivilegedSelfEdit =
+    const writeGrants = firestore.match(/allow\s+[^:;]*(?:write|create|update|delete)[^:;]*:\s*[^;]+;/g) || []
+    const allClientWritesDenied = writeGrants.length > 0 && writeGrants.every(grant => /:\s*if\s+false\s*;/.test(grant))
+    const blocksPrivilegedSelfEdit = allClientWritesDenied ||
       /level|role|admin|subscriptionTier|mfaRequired|securityProfile/.test(firestore) &&
       /affectedKeys|diff|changedKeys|hasOnly|hasAny/.test(firestore)
     if (blocksPrivilegedSelfEdit) {
@@ -107,7 +109,11 @@ function checkRules() {
 
   const storage = requireFile('storage.rules')
   if (storage) {
-    if (storage.includes('accountLevel()') || storage.includes('isAdmin()')) {
+    const grants = storage.match(/allow\s+[^:;]+:\s*[^;]+;/g) || []
+    const closedStorage = grants.length > 0 && grants.every(grant => /:\s*if\s+false\s*;/.test(grant))
+    if (closedStorage) {
+      pass('storage.rules denies all client access; no upload workflow is enabled')
+    } else if (storage.includes('accountLevel()') || storage.includes('isAdmin()')) {
       pass('storage.rules includes account/admin authorization helpers')
     } else {
       fail('storage.rules missing account/admin authorization helpers')

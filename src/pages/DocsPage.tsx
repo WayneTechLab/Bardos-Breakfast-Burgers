@@ -1,31 +1,90 @@
-const docs = [
-  'README.md',
-  'wiki/Home.md',
-  'wiki/Quick-Start.md',
-  'docs/RUNBOOK.md',
-]
+import { AppLink } from '@/components/navigation/AppLink'
 
+const questions = [
+  {
+    id: 'ordering',
+    title: 'Ordering',
+    entries: [
+      [
+        'Is online ordering available?',
+        'Online checkout is available only when payment services are enabled. A basket is not an accepted order until submission succeeds.',
+      ],
+      [
+        'Where can I check my order?',
+        'Your account lists the orders placed while signed in, including payment and preparation status. A return from the payment page alone does not confirm payment.',
+      ],
+      [
+        'Can I have an order delivered?',
+        'Delivery is not currently available through this website.',
+      ],
+    ],
+  },
+  {
+    id: 'menu-questions',
+    title: 'Menu questions',
+    entries: [
+      [
+        'What about allergies or substitutions?',
+        'Please confirm ingredients and preparation directly with the restaurant before ordering. Menu descriptions may not list every ingredient.',
+      ],
+      ['Can I print the menu?', 'A printable menu is available on the full menu page.'],
+      [
+        'Are all items always available?',
+        'Availability can change. Items marked sold out cannot be added to an order.',
+      ],
+    ],
+  },
+  {
+    id: 'account-support',
+    title: 'Account & support',
+    entries: [
+      [
+        'Do I need an account?',
+        'The menu is open to everyone. An account is required to place online orders or send a support request.',
+      ],
+      [
+        'How do I reset my password?',
+        'Enter your email on the sign-in page and select Reset password. Google sign-in accounts use their Google credentials.',
+      ],
+      [
+        'How do I ask about a charge or order?',
+        'Contact the restaurant through your account. Include the order number, but never send a password or card number. Refunds require review by the restaurant.',
+      ],
+    ],
+  },
+]
 export function DocsPage() {
   return (
-    <section className="mx-auto max-w-4xl px-4 py-16">
-      <p className="text-sm font-semibold uppercase tracking-wide text-red-700">
-        Project docs
-      </p>
-      <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-        Bardo's runs on the Wayne Tech Lab webapp standard.
-      </h1>
-      <p className="mt-5 text-lg leading-8 text-stone-600">
-        The restaurant-facing app is customized for Bardo's, while the repo
-        keeps SYSTEMX setup, Firebase, security, CI, deployment, and handoff
-        documentation for operators.
-      </p>
-      <ul className="mt-10 divide-y divide-neutral-200 border-y border-neutral-200">
-        {docs.map((doc) => (
-          <li key={doc} className="py-4 font-mono text-sm text-neutral-700">
-            {doc}
-          </li>
-        ))}
-      </ul>
-    </section>
+    <article className="public-wrap public-page help-page">
+      <header className="public-intro">
+        <p className="eyebrow">Bardo's support</p>
+        <h1>Ordering &amp; help</h1>
+        <p>A few answers before you order.</p>
+      </header>
+      {questions.map((section) => (
+        <section
+          key={section.id}
+          id={section.id}
+          data-page-section={section.title}
+          className="faq-section"
+        >
+          <h2>{section.title}</h2>
+          {section.entries.map(([question, answer]) => (
+            <details key={question}>
+              <summary>{question}</summary>
+              <p>{answer}</p>
+            </details>
+          ))}
+        </section>
+      ))}
+      <div className="public-actions">
+        <AppLink to="/contact" className="public-button">
+          Contact the team
+        </AppLink>
+        <AppLink to="/account" className="public-button secondary">
+          My orders
+        </AppLink>
+      </div>
+    </article>
   )
 }

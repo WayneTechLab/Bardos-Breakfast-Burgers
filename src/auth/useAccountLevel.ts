@@ -1,33 +1,12 @@
-import { useEffect, useMemo, useState } from 'react'
-import {
-  getAccountCapabilities,
-  getAccountLevelDefinition,
-  normalizeAccountLevel,
-  type AccountLevel,
-} from '@/auth/accountLevels'
-
-const STORAGE_KEY = 'wsg.demo.accountLevel'
-
-function readInitialLevel(): AccountLevel {
-  if (typeof window === 'undefined') return 0
-  const params = new URLSearchParams(window.location.search)
-  return normalizeAccountLevel(params.get('level') ?? window.localStorage.getItem(STORAGE_KEY))
-}
+import { useSyncExternalStore } from 'react'
+import { getAccountCapabilities, getAccountLevelDefinition } from './accountLevels'
+import { subscribeAuth, getAuthSnapshot } from './authStore'
 
 export function useAccountLevel() {
-  const [level, setLevelState] = useState<AccountLevel>(readInitialLevel)
-
-  useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, String(level))
-  }, [level])
-
-  const definition = useMemo(() => getAccountLevelDefinition(level), [level])
-  const capabilities = useMemo(() => getAccountCapabilities(level), [level])
-
+  const state = useSyncExternalStore(subscribeAuth, getAuthSnapshot)
   return {
-    level,
-    definition,
-    capabilities,
-    setLevel: (nextLevel: AccountLevel) => setLevelState(normalizeAccountLevel(nextLevel)),
+    ...state,
+    definition: getAccountLevelDefinition(state.level),
+    capabilities: getAccountCapabilities(state.level),
   }
 }

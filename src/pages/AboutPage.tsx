@@ -1,33 +1,57 @@
+import { ArrowRight } from 'lucide-react'
+import { AppLink } from '@/components/navigation/AppLink'
+
 export function AboutPage() {
   return (
-    <section className="mx-auto max-w-4xl px-4 py-16">
-      <p className="text-sm font-semibold uppercase tracking-wide text-red-700">
-        About Bardo's
-      </p>
-      <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-        Breakfast comfort and burger craft for Salem, Oregon.
-      </h1>
-      <p className="mt-5 text-lg leading-8 text-stone-600">
-        Bardo's Breakfast Burgers is shaped as a neighborhood counter-service
-        concept: quick enough for a workday pickup, warm enough for weekend
-        breakfast, and memorable enough to carry a bold local brand online.
-      </p>
-      <div className="mt-10 grid gap-4 sm:grid-cols-2">
-        <div className="border border-stone-200 p-5">
-          <h2 className="font-semibold">Restaurant direction</h2>
-          <p className="mt-2 text-sm leading-6 text-stone-600">
-            The webapp centers menu discovery, pickup intent, catering leads,
-            specials, and a rewards path that can later connect to Firebase.
+    <article className="public-wrap public-page">
+      <header className="public-intro">
+        <p className="eyebrow">Salem, Oregon</p>
+        <h1>About Bardo's</h1>
+        <p>Breakfast specials. Burgers. A menu with plenty to choose from.</p>
+      </header>
+      <section className="editorial-row" id="our-menu" data-page-section="Our menu">
+        <h2>Breakfast to lunch</h2>
+        <div>
+          <p>
+            Explore breakfast plates and omelets, burgers and sandwiches, wraps, salads, sides, and
+            something sweet. Drinks range from hot coffee to milkshakes.
           </p>
+          <AppLink to="/services" className="text-link">
+            See the full menu
+            <ArrowRight size={17} />
+          </AppLink>
         </div>
-        <div className="border border-stone-200 p-5">
-          <h2 className="font-semibold">Brand feel</h2>
-          <p className="mt-2 text-sm leading-6 text-stone-600">
-            Red, black, warm gold, and confident food-forward copy match the
-            supplied Bardo's BB breakfast and burger logo.
+      </section>
+      <section className="editorial-row" id="before-you-visit" data-page-section="Before you visit">
+        <h2>Plan your visit</h2>
+        <div>
+          <p>
+            Current hours, street address, and telephone details are awaiting confirmation. Please
+            check with the restaurant before making a special trip.
           </p>
+          <AppLink to="/contact" className="text-link">
+            Ask the team
+            <ArrowRight size={17} />
+          </AppLink>
         </div>
-      </div>
-    </section>
+      </section>
+      <section
+        className="editorial-row"
+        id="dietary-questions"
+        data-page-section="Dietary questions"
+      >
+        <h2>A question about your meal?</h2>
+        <div>
+          <p>
+            Please ask the restaurant about ingredients, preparation, and substitutions before
+            ordering. Menu descriptions are not a complete allergen list.
+          </p>
+          <AppLink to="/docs" className="text-link">
+            Ordering &amp; help
+            <ArrowRight size={17} />
+          </AppLink>
+        </div>
+      </section>
+    </article>
   )
 }

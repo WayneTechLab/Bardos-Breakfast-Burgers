@@ -5,6 +5,8 @@ Backlog for the generic template. Check items off or move to
 
 ## Next up
 
+- [ ] Restaurant release: configure real Firebase and Stripe sandbox services, prove MFA/App Check and payment/subscription lifecycle on staging, confirm venue/tax/fulfillment policies, and complete hardware/payroll/inventory workflows required by the owner. See `.SYSTEMX/docs/RESTAURANT-OPERATIONS.md`; local test success is not production acceptance.
+
 - [ ] Add a Vitest + Playwright scaffold to `starter/` (currently playbook-only, Step 10)
 - [ ] Add an optional `functions/` skeleton to `starter/` for projects that want it (Step 06)
 - [ ] Provide a Firebase deploy example wired to `deploy.sh` (Step 09)
